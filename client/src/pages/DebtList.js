@@ -142,7 +142,7 @@ function DebtList() {
           <thead className="table-dark">
             <tr>
               <th>Tên người nợ</th>
-              <th>Thông tin liên hệ</th>
+              <th className="d-none d-md-table-cell">Thông tin liên hệ</th>
               <th>Tổng nợ</th>
               <th>Thao tác</th>
             </tr>
@@ -157,9 +157,14 @@ function DebtList() {
             ) : (
               filteredUsers.map((user) => (
                 <tr key={user._id}>
-                  <td>{user.name}</td>
                   <td>
-                    <div className='d-none d-sm-block'>Email: {user.email}</div>
+                    <div>{user.name}</div>
+                    <div className="d-md-none small text-muted">
+                      {user.phone && <div>SĐT: {user.phone}</div>}
+                    </div>
+                  </td>
+                  <td className="d-none d-md-table-cell">
+                    <div>Email: {user.email}</div>
                     {user.phone && <div>SĐT: {user.phone}</div>}
                   </td>
                   <td className="text-end fw-bold text-danger">
@@ -220,6 +225,7 @@ function DebtList() {
         show={showNewDebtForm}
         onClose={() => {
           setShowNewDebtForm(false);
+          setSelectedUser(null);
           setError('');
           setSuccess('');
         }}
@@ -227,6 +233,7 @@ function DebtList() {
         users={users}
         error={error}
         success={success}
+        selectedUserId={selectedUser?._id}
       />
 
       <PaymentForm

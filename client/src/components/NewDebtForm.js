@@ -1,9 +1,16 @@
 import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 
-function NewDebtForm({ show, onClose, onSubmit, users, error, success }) {
-  const [newDebt, setNewDebt] = useState({ userId: '', amount: '', description: '' });
+function NewDebtForm({ show, onClose, onSubmit, users, error, success, selectedUserId }) {
+  const [newDebt, setNewDebt] = useState({ userId: selectedUserId || '', amount: '', description: '' });
   const [errors, setErrors] = useState({});
+
+  // Cập nhật userId khi selectedUserId thay đổi
+  useEffect(() => {
+    if (selectedUserId) {
+      setNewDebt(prev => ({ ...prev, userId: selectedUserId }));
+    }
+  }, [selectedUserId]);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -53,6 +60,7 @@ function NewDebtForm({ show, onClose, onSubmit, users, error, success }) {
                   value={newDebt.userId}
                   onChange={handleChange}
                   required
+                  disabled={!!selectedUserId}
                 >
                   <option value="">Chọn người nợ</option>
                   {users.map((user) => (
@@ -115,6 +123,7 @@ NewDebtForm.propTypes = {
   ).isRequired,
   error: PropTypes.string,
   success: PropTypes.string,
+  selectedUserId: PropTypes.string
 };
 
 export default NewDebtForm;

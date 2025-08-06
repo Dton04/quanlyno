@@ -9,10 +9,9 @@ require('dotenv').config();
 const app = express();
 connectDB();
 
-const cors = require('cors');
 app.use(cors({
   origin: [
-    'http://localhost:3000', 'https://quanlyno-three.vercel.app'
+    'http://localhost:3000', 'https://mqstoreno.vercel.app'
   ],
 }));
 app.use(express.json());
