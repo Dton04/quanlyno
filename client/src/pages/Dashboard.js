@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
 import axios from 'axios';
 
+const API_URL = process.env.REACT_APP_API_URL || 'http://localhost:5000';
 
 function Dashboard() {
   const [totalDebt, setTotalDebt] = useState(0);
@@ -9,7 +10,7 @@ function Dashboard() {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const { data } = await axios.get('http://localhost:5000/api/debts');
+        const { data } = await axios.get(`${API_URL}/api/debts`);
         const total = data.debts.reduce((sum, debt) => sum + debt.amount, 0);
         const users = new Set(data.debts.map((debt) => debt.userId._id)).size;
         setTotalDebt(total);

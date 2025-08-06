@@ -14,7 +14,6 @@ app.use(cors({
   origin: [
     'http://localhost:3000', 'https://quanlyno-three.vercel.app'
   ],
-  credentials: true
 }));
 app.use(express.json());
 app.use('/api/debts', debtRoutes);
